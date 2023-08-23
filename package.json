@@ -4,8 +4,11 @@
   "license": "MIT",
   "scripts": {},
   "private": true,
-  "dependencies": {},
   "devDependencies": {
+    "@nx/angular": "^16.7.3",
+    "@nx/nest": "^16.7.3",
+    "@nx/react": "^16.7.3",
+    "@nx/storybook": "^16.7.3",
     "@nx/workspace": "16.7.2",
     "nx": "16.7.2",
     "nx-cloud": "latest"
