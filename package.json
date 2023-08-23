@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "hangman:start": "nx serve hangman",
-    "hangman:build": "nx build hangman"
+    "hangman:build": "nx build hangman",
+    "hangman:test": "nx test hangmang-core"
   },
   "private": true,
   "devDependencies": {
