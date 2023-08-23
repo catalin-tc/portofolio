@@ -19,9 +19,9 @@ export default defineConfig({
   plugins: [react(), nxViteTsPaths()],
 
   // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
+  worker: {
+    plugins: [nxViteTsPaths()],
+  },
 
   define: {
     'import.meta.vitest': undefined,

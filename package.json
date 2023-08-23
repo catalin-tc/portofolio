@@ -2,7 +2,10 @@
   "name": "@portofolio/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "hangman:start": "nx serve hangman",
+    "hangman:build": "nx build hangman"
+  },
   "private": true,
   "devDependencies": {
     "@nx/angular": "^16.7.3",
