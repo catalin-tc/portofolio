@@ -1,7 +1,7 @@
 {
-  "name": "hangmang-core",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/hangmang/core/src",
+  "name": "hangman-toolkit",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/hangman-toolkit/src",
   "projectType": "library",
   "tags": ["lib", ""],
   "targets": {
@@ -9,14 +9,14 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/hangmang/core/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/hangman-toolkit/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/hangmang/core/jest.config.ts",
+        "jestConfig": "libs/hangman-toolkit/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

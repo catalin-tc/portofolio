@@ -17,7 +17,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@portofolio/hangmang/core": ["libs/hangmang/core/src/index.ts"]
+      "@portofolio/hangman-toolkit": ["libs/hangman-toolkit/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
