@@ -5,7 +5,10 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parserOptions": {
-        "project": ["libs/hangman-toolkit/tsconfig.*?.json"]
+        "project": [
+          "libs/hangman-toolkit/tsconfig.*?.json",
+          "libs/hangman-toolkit/tsconfig.storybook.json"
+        ]
       },
       "rules": {}
     },
