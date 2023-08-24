@@ -1,32 +1,25 @@
-import { useMemo } from 'react';
-import { bind } from '@react-rxjs/core';
-import { useHangmanContext } from '../HangmanContext';
+import {
+  useHangmanContext,
+  useHangmanCorrectLetters,
+  useHangmanWrongLetters,
+} from '../../core/hangman-core.hooks';
+import './Keyboard.scss';
 
 export const Keyboard = () => {
-  const hangman = useHangmanContext();
+  const hangmanCtx = useHangmanContext();
 
-  const { useCorrectLetters, useWrongLetters } = useMemo(() => {
-    const [useWrongLetters] = bind(hangman.wrongLetters$);
-    const [useCorrectLetters] = bind(hangman.correctLetters$);
-
-    return {
-      useWrongLetters,
-      useCorrectLetters,
-    };
-  }, [hangman]);
-
-  const alphabet = hangman.getAlphabet();
-  const correctLetters = useCorrectLetters();
-  const wrongLetters = useWrongLetters();
+  const alphabet = hangmanCtx.getAlphabet();
+  const correctLetters = useHangmanCorrectLetters();
+  const wrongLetters = useHangmanWrongLetters();
 
   return (
-    <div>
-      <ul>
+    <div className="keyboard">
+      <ul className="keyboard--keys-list">
         {alphabet.map((letter) => (
           <Letter
             key={letter}
             value={letter}
-            onClick={hangman.submitLetter}
+            onClick={() => hangmanCtx.submitLetter(letter)}
             status={computeLetterStatus(letter, correctLetters, wrongLetters)}
           />
         ))}
@@ -52,17 +45,20 @@ type LetterState = 'undecided' | 'correct' | 'wrong';
 interface LetterProps {
   status: LetterState;
   value: string;
-  onClick: (letter: string) => void;
+  onClick: () => void;
 }
 
 const Letter = ({ onClick, status, value }: LetterProps) => {
   return (
-    <button
-      className={`keyboard-letter ${status}`}
-      type="button"
-      onClick={() => onClick(value)}
-    >
-      {value}
-    </button>
+    <li className="keyboard--key">
+      <button
+        disabled={status !== 'undecided'}
+        className={`keyboard--letter ${status}`}
+        type="button"
+        onClick={onClick}
+      >
+        {value}
+      </button>
+    </li>
   );
 };

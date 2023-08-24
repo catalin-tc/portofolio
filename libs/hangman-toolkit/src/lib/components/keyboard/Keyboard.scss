@@ -1,0 +1,37 @@
+.keyboard {
+  @apply tw-h-full;
+}
+
+.keyboard--keys-list {
+  @apply tw-flex tw-gap-4 tw-flex-wrap tw-items-center tw-justify-center;
+}
+
+.keyboard--key {
+  @apply tw-flex tw-items-center tw-justify-center;
+}
+
+.keyboard--letter {
+  @apply tw-w-12;
+  @apply tw-aspect-1;
+  @apply tw-uppercase;
+  @apply tw-font-medium tw-text-xl;
+  @apply tw-border-2 tw-border-slate-600;
+
+  @apply disabled:tw-cursor-not-allowed;
+
+  &.undecided {
+    @apply tw-text-slate-900;
+    @apply hover:tw-border-slate-900;
+    @apply focus-visible:tw-text-black hover:tw-text-black;
+  }
+
+  &.correct {
+    @apply tw-text-green-600;
+    @apply tw-border-green-600;
+  }
+
+  &.wrong {
+    @apply tw-text-red-800;
+    @apply tw-border-red-800;
+  }
+}
