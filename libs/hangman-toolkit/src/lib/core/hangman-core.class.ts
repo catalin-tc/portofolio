@@ -26,15 +26,26 @@ export class HangmanCore {
   );
 
   public readonly correctLetters$ = this.gameStateSubject.asObservable().pipe(
-    map(({ correctLetters }) => [...correctLetters]),
-    // In JS sets are ordered, so the array will be ordered too => it is enough to compare the lenght
-    distinctUntilChanged((prev, curr) => prev.length === curr.length)
+    map(({ correctLetters }) => ({
+      letters: correctLetters,
+      size: correctLetters.size,
+    })),
+    distinctUntilChanged(
+      ({ size: sizePrev }, { size: sizeCurr }) => sizePrev === sizeCurr
+    ),
+    map(({ letters }) => letters)
   );
 
   public readonly wrongLetters$ = this.gameStateSubject.asObservable().pipe(
-    map(({ wrongLetters }) => [...wrongLetters]),
+    map(({ wrongLetters }) => ({
+      letters: wrongLetters,
+      size: wrongLetters.size,
+    })),
     // In JS sets are ordered, so the array will be ordered too => it is enough to compare the lenght
-    distinctUntilChanged((prev, curr) => prev.length === curr.length)
+    distinctUntilChanged(
+      ({ size: sizePrev }, { size: sizeCurr }) => sizePrev === sizeCurr
+    ),
+    map(({ letters }) => letters)
   );
 
   constructor(

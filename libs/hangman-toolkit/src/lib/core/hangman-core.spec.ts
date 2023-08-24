@@ -1,4 +1,4 @@
-import { distinctUntilChanged, forkJoin, map, scan, take } from 'rxjs';
+import { distinctUntilChanged, forkJoin, map, reduce, scan, take } from 'rxjs';
 import { HangmanCore } from './hangman-core.class';
 
 describe('The HangmanCore class spec', () => {
@@ -27,8 +27,8 @@ describe('The HangmanCore class spec', () => {
         wrongLetters: hangmanCore.wrongLetters$.pipe(take(1)),
       }).subscribe({
         next: ({ correctLetters, gameState, lives, wrongLetters }) => {
-          expect(correctLetters.length).toEqual(0);
-          expect(wrongLetters.length).toEqual(0);
+          expect(correctLetters.size).toEqual(0);
+          expect(wrongLetters.size).toEqual(0);
           expect(gameState).toEqual('playing');
           expect(lives).toEqual(6);
         },
@@ -98,10 +98,40 @@ describe('The HangmanCore class spec', () => {
   });
 
   describe('Submissions', () => {
+    it('Should emit a new correctLetter state on every correct submission', (done) => {
+      hangmanCore.correctLetters$
+        .pipe(
+          map((x) => x.size),
+          reduce((emissions) => ++emissions, 0)
+        )
+        .subscribe({
+          next: (emissions) => {
+            expect(emissions).toEqual(correctLetters.length + 1);
+            done();
+          },
+        });
+      correctLetters.forEach((letter) => hangmanCore.submitLetter(letter));
+    });
+
+    it('Should emit a new wrongLetter state on every wrong submission', (done) => {
+      hangmanCore.wrongLetters$
+        .pipe(
+          map((x) => x.size),
+          reduce((acc) => ++acc, 0)
+        )
+        .subscribe({
+          next: (emissions) => {
+            expect(emissions).toEqual(wrongLetters.length + 1);
+            done();
+          },
+        });
+      wrongLetters.forEach((letter) => hangmanCore.submitLetter(letter));
+    });
+
     it('Should add a letter to the correct letters array on correct submission', (done) => {
       hangmanCore.correctLetters$
         .pipe(
-          map((x) => x.length),
+          map((x) => x.size),
           scan((prev, curr) => {
             expect(prev + 1).toEqual(curr);
             return curr;
@@ -116,7 +146,7 @@ describe('The HangmanCore class spec', () => {
     it('Should add a letter to the wrong letters array on wrong submission', (done) => {
       hangmanCore.wrongLetters$
         .pipe(
-          map((x) => x.length),
+          map((x) => x.size),
           scan((prev, curr) => {
             expect(prev + 1).toEqual(curr);
             return curr;
